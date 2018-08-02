@@ -30,7 +30,7 @@ class App extends Component {
 	  }
   	  render() {
     	return (
-	         <div className={"tab-content graphs grid-view " +this.state.currentlayout} id="pills-tabContent">
+	         <div className={"tab-content graphs list-view " +this.state.currentlayout} id="pills-tabContent">
 			    <div className="tab-pane fade show active" id="Calculator" role="tabpanel" aria-labelledby="pills-home-tab">
 			        <div className="graph-tabs">
 			            <div className="graph-1">

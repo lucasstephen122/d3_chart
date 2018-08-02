@@ -15,10 +15,10 @@ class App extends Component {
 	 }
   	  render() {
     	return (
-	         <div className="chart-content" id="pills-tabContent">
+	         <div className="tab-content graphs list-view chart-content" id="pills-tabContent">
 			    <div className="" id="Calculator" role="tabpanel" aria-labelledby="pills-home-tab">
-			        <div className="">
-			            <div className="chart-pane">
+			        <div className="graph-tabs">
+			            <div className="graph-1 chart-pane">
 			                <div>
 								<Chart type="2" legend="1" areaData={area} lineData={line} extendData='2'/>
 			                </div>

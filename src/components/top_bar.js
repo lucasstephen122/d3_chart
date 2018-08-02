@@ -7,10 +7,12 @@ import PubSub from 'pubsub-js';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
+        this.toggle1 = this.toggle1.bind(this);
+        this.toggle2 = this.toggle2.bind(this);
         this.state = {
           currentlayout: "grid",
-          dropdownOpen: false
+          dropdownOpen1: false,
+          dropdownOpen2: false
         };
       }
 
@@ -18,11 +20,16 @@ class App extends Component {
         this.state.currentlayout= val;
           PubSub.publish('Change cards view', val);
      }
-     toggle() {
+     toggle1() {
       this.setState(prevState => ({
-        dropdownOpen: !prevState.dropdownOpen
+        dropdownOpen1: !prevState.dropdownOpen1
       }));
     }
+    toggle2() {
+     this.setState(prevState => ({
+       dropdownOpen2: !prevState.dropdownOpen2
+     }));
+   }
     
      render() {
           const gridstatus = this.state.currentlayout === "grid" ? "active" : "";
@@ -36,7 +43,7 @@ class App extends Component {
                     </div>
                     <div className="col-md-6">
                     <Button className='pull-right margin- ' size='sm' color="info">YTD YEF</Button>{' '}
-                    <Dropdown group isOpen={this.state.dropdownOpen} size="sm" className="pull-right" toggle={this.toggle}>
+                    <Dropdown group isOpen={this.state.dropdownOpen1} size="sm" className="pull-right" toggle={this.toggle1}>
                       <DropdownToggle caret className="custom-dropdown-toggle">
                         Year
                       </DropdownToggle>
@@ -45,13 +52,13 @@ class App extends Component {
                         <DropdownItem>2018</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
-                    <Dropdown isOpen={this.state.dropdownOpen} size="sm" className="pull-right" toggle={this.toggle}>
+                    <Dropdown isOpen={this.state.dropdownOpen2} size="sm" className="pull-right" toggle={this.toggle2}>
                       <DropdownToggle caret className="custom-dropdown-toggle">
                         Quarter
                       </DropdownToggle>
                       <DropdownMenu>
-                        <DropdownItem>Action1</DropdownItem>
-                        <DropdownItem>Action2</DropdownItem>
+                        <DropdownItem>Quarter1</DropdownItem>
+                        <DropdownItem>Quarter2</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
                     </div>
