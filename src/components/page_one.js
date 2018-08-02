@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import Card_header from './card-header';
 import Chart from './page_chart/Chart'
-import area from '../chart-data1'
-import line from '../chart-data3'
-import PubSub from 'pubsub-js';
-import jQuery from 'jquery';
+import data from '../chart-data3'
 
 class App extends Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {
-	      currentlayout: "grid-view",
-	    };
 	 }
   	  render() {
     	return (
@@ -20,11 +13,11 @@ class App extends Component {
 			        <div className="graph-tabs">
 			            <div className="graph-1 chart-pane">
 			                <div>
-								<Chart type="2" legend="1" areaData={area} lineData={line} extendData='2'/>
+								<Chart data={data}/>
 			                </div>
-							<div>
-								<Chart type="2" legend="0" areaData={area} lineData={line} extendData='2'/>
-			                </div>
+							{/* <div>
+								<Chart data={data}/>
+			                </div> */}
 			            </div>
 			        </div>
 			    </div>
