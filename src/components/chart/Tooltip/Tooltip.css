@@ -1,0 +1,83 @@
+.tooltip {
+    position: absolute;
+    width: 240px;
+    font: 12px sans-serif;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.11);
+    background-color: #ffffff;
+    border: solid 1px #cccccc;
+}
+
+.dot-info-div {
+    background-color: #ffffff;
+    border: solid 1px #e0e1e2;
+    padding: 5px;
+    display: flex;
+}
+
+.dot-info-1,
+.dot-info-2 {
+    width: 28%;
+}
+
+.dot-info-3 {
+    width: 44%;
+}
+
+.dot-info-p-title {
+    font-family: MuseoSans;
+    font-size: 8px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #7d878f;
+    margin-bottom: 0;
+}
+
+.dot-info-p-value {
+    font-family: MuseoSans;
+    font-size: 9px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.75;
+    letter-spacing: normal;
+    color: #333333;
+    margin-bottom: 0;
+}
+
+.dot-comment-div {
+    border-left: solid 3px #009e8e;
+    border-bottom-left-radius: 4px;
+    padding: 0 5px;
+}
+
+.comment-info {
+    font-family: MuseoSans;
+    font-size: 10px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #7d878f;
+}
+
+.comment-date {
+    float: right;
+}
+
+.comment-content {
+    font-family: MuseoSans;
+    font-size: 11px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.27;
+    letter-spacing: normal;
+    color: #333333;
+    padding-bottom: 5px;
+}

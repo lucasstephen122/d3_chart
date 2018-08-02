@@ -1,0 +1,6 @@
+.y_label {
+    text-anchor: middle;
+    text-transform: uppercase;
+    fill: rgb(153, 153, 153);
+    font-size: 12px;
+}

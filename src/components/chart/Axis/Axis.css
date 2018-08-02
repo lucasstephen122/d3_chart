@@ -1,0 +1,14 @@
+.Axis-Left line,
+.Axis-Bottom line {
+    fill: none;
+    stroke: #777777;
+    shape-rendering: crispEdges;
+}
+.Axis-Left path,
+.Axis-Bottom path {
+    stroke: #777777;
+}
+.Axis-Left text,
+.Axis-Bottom text {
+    fill: #777777;
+}
