@@ -10,7 +10,7 @@ export default class Line extends Component {
         const { height , width } = svgDimensions
 
         let bar_width = (width-data.length*3) / data.length
-        console.log(height - margins.bottom)
+        //console.log(height - margins.bottom)
         
         let bars = []
         if(type == 1){

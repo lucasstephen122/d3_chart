@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { scaleBand , scaleLinear, scaleTime } from 'd3-scale'
+import { scaleLinear, scaleTime } from 'd3-scale'
 import {extent} from 'd3'
-import {format} from 'd3-time'
-import { timeFormat, timeParse } from 'd3-time-format'
+import { timeParse } from 'd3-time-format'
 import Lines from './Line/Line'
 import Bars from './Bar/Bar'
 import Areas from './Area/Area'
 import jQuery from 'jquery';
 import Axes from './Axes/Axes'
 import Axes1 from './Axes/Axes1'
+import Tooltip from './Tooltip/Tooltip'
 import Legend from './Legend/Legend'
 import DotLine from './DotLine/DotLine'
 import AxisLabel from './AxisLabel/AxisLabel'
@@ -42,6 +42,7 @@ class Chart extends Component {
             yTooltip: e.pageY,
             t_opacity: 1
         })
+        console.log("234");
     }
 
     subscriber(msg, data) {
@@ -57,7 +58,7 @@ class Chart extends Component {
         const svgDimensions = {
             // width: jQuery(".Responsive-wrapper").width(),
             width: this.props.parentWidth,
-            height: 1000
+            height: 700
         }
         const svgSubDimentions1 = {
             width: this.props.parentWidth,
@@ -67,7 +68,10 @@ class Chart extends Component {
             width: this.props.parentWidth,
             height: 700
         }
-        //const maxValue = Math.max(...data.map(d => d.value1))
+        const maxValue = Math.max(...data.map(d => d.value3))
+        const minValue = Math.min(...data.map(d => d.value3))
+        console.log(maxValue);
+        console.log(minValue);
         var parseDate = timeParse("%Y-%m-%d");
         var new_data = []
         data.forEach(function(item){
@@ -112,6 +116,13 @@ class Chart extends Component {
                         scales = {{ xScale, yScale }} 
                         margins = {margins}
                     />
+                    <rect 
+                        key={Math.random()}
+                        x={margins.left}
+                        y={yScale(maxValue+20)}
+                        height={120}
+                        width={svgDimensions.width- margins.right-margins.left}
+                    />
                     <Lines
                         scales={{ xScale, yScale }}
                         data={new_data}
@@ -147,6 +158,7 @@ class Chart extends Component {
                         y_value = {450} 
                     />
                 </svg>
+                <Tooltip {...this.state} />
             </div>
         )
     }

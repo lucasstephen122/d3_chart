@@ -11,9 +11,9 @@ export default class DotLine extends Component {
         const line_width = svgDimensions.width - margins.left - margins.right
         const text_x = line_width - 120
         return (
-            <g class="tick" opacity="1" transform={`translate(${x_translate} , ${y_translate})`}>
-                <line stroke="#000" x2={line_width} stroke-width="2" stroke-dasharray = "5,5" ></line>
-                <text fill="#000" x={text_x} dy="-15" font-size="14">{text}</text>
+            <g className="tick" opacity="1" transform={`translate(${x_translate} , ${y_translate})`}>
+                <line stroke="#000" x2={line_width} strokeWidth="2" strokeDasharray = "5,5" ></line>
+                <text fill="#000" x={text_x} dy="-15" fontSize="14">{text}</text>
             </g>
         )
     }

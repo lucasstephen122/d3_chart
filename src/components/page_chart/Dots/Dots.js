@@ -22,21 +22,22 @@ export default class Dots extends Component {
     }
 
     render() {
-        const { scales, data, type } = this.props
+        const { scales, data } = this.props
         const { xScale, yScale } = scales
-        const dot_color = type == 1 ? '#e0b25c' : '#58478d';
+        const dot_color = '#58478d';
         
         const dots = (
             data.map( datum =>
                 <circle
                     key= {Math.random()}
                     className="dot"
-                    r = {[5]}
-                    stroke={dot_color}
-                    cx = {xScale(datum.x)}
-                    cy = {yScale(datum.y)}
+                    r = {[6]}
+                    stroke = {dot_color}
+                    cx = {xScale(datum.parsed_date)}
+                    cy = {yScale(datum.value3)}
                     onMouseOut={this.triggerOut.bind(this, datum)}
-                    onClick={this.triggerOver.bind(this, datum)}
+                    onMouseOver={this.triggerOver.bind(this, datum)}
+                    onMouseMove={this.triggerOver.bind(this, datum)}
                 />
             )
         )
