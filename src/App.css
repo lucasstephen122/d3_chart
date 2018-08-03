@@ -114,6 +114,14 @@ a:hover, a:focus{
                 font-size: 9px;
                 min-height: 20px;
             }
+            .top-bar-1{
+                display: inline-block;
+                width: 100%;
+            }
+            .top-bar-2{
+                display: inline-block;
+                width: 100%;
+            }
         }
         @media (max-width: 575px){
             .header h1 a{

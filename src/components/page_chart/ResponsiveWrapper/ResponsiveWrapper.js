@@ -27,7 +27,6 @@ export default ChartComponent => (
                 .getBoundingClientRect().width
 
             const shouldResize = containerWidth !== currentContainerWidth
-
             if (shouldResize) {
                 this.setState({
                     containerWidth: currentContainerWidth,

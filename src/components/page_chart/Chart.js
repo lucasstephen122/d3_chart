@@ -42,13 +42,15 @@ class Chart extends Component {
         this.setState({
             containerwidth: jQuery(".Responsive-wrapper").width()
         });
+        
      }
 
     render() {
         const data = this.props.data
-        const margins = { top: 70, right: 50, bottom: 40, left: 80 }
+        const margins = { top: 70, right: 50, bottom: 40, left: 100 }
         const svgDimensions = {
-            width: this.state.containerwidth,
+            // width: jQuery(".Responsive-wrapper").width(),
+            width: this.props.parentWidth,
             height: 500
         }
         var parseDate = timeFormat("%b-%d").parse;
@@ -62,9 +64,6 @@ class Chart extends Component {
         const yScale = this.yScale
             .domain([0, 800])
             .range([svgDimensions.height - margins.bottom, margins.top])
-
-        const yLabels = [{text:'Tank' , x:60 , y:90} , {text:'Inventory' , x:42 , y:110} , {text:'(`000 M3)' , x:46 , y:130}]
-        
         return (
             <div>
                 <svg width={svgDimensions.width} height={svgDimensions.height}>
@@ -76,7 +75,8 @@ class Chart extends Component {
                     <Legend />
                     <AxisLabel 
                         svgDimensions={svgDimensions}
-                        yLabel={yLabels}
+                        // yLabel={yLabels}
+                        yLabel = {"Tank  Inventory  (`000 M3)"}
                     />
                 </svg>
             </div>

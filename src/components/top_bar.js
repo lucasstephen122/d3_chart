@@ -36,12 +36,12 @@ class App extends Component {
           const liststatus = this.state.currentlayout === "list" ? "active" : "";
           return (
                <div className="nav-bar d-flex top-bar">
-                    <div className='col-md-6'>
+                    <div className='col-md-6 top-bar-1'>
                         <label className='title'>Tank Inventory Forecast</label>
                         <label className="vertical-line"></label>
                         <label className="sub-title">Last Updated : 31 June 2018</label>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6 top-bar-2">
                     <Button className='pull-right margin- ' size='sm' color="info">YTD YEF</Button>{' '}
                     <Dropdown group isOpen={this.state.dropdownOpen1} size="sm" className="pull-right" toggle={this.toggle1}>
                       <DropdownToggle caret className="custom-dropdown-toggle">

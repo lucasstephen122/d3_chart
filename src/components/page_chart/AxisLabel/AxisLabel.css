@@ -1,5 +1,5 @@
 .y_label {
-    text-anchor: middle;
+    text-anchor: end;
     fill: rgb(12, 12, 12);
     font-size: 12px;
     font-weight:500;

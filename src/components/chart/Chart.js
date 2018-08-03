@@ -59,6 +59,7 @@ class Chart extends Component {
         this.setState({
             containerwidth: jQuery(".Responsive-wrapper").width()
         });
+        console.log("111")
      }
 
     render() {
