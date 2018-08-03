@@ -12,3 +12,6 @@
 .Axis-Bottom text {
     fill: #777777;
 }
+.text_none .tick text{
+    display:none;
+}

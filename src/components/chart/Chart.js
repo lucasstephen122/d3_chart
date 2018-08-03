@@ -26,7 +26,7 @@ class Chart extends Component {
         this.subscriber = this.subscriber.bind(this);
     }
 
-    mouseOut(e, d) {
+    mouseOut(e) {
         this.setState({
             xTooltip: null,
             yTooltip: null,
@@ -34,7 +34,7 @@ class Chart extends Component {
         })
     }
 
-    mouseOver(e, d) {
+    mouseOver(e) {
         this.setState({
             xTooltip: e.pageX,
             yTooltip: e.pageY,

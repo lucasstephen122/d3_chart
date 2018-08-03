@@ -4,19 +4,20 @@ import * as d3 from 'd3-shape'
 export default class Area extends Component {
 
     render() {
-        const { scales, data, margins, svgDimensions } = this.props
+        const { scales, data, margins } = this.props
         const { xScale, yScale } = scales
-        const { height } = svgDimensions 
+       
+        const fill_color = 'rgba(88, 71, 141, 0.1)' ;
+        const area = d3.area()
+            .curve(d3.curveBasis)
+            .x(function (d) { return xScale(d.parsed_date); })
+            .y0(function (d) { return yScale(d.value2); })
+            .y1(function (d) { return yScale(d.value1); })
 
-        const line = d3.area()
-            // .x(function (d) { return xScale(d.x); })
-            // .y1(function (d) { return yScale(d.y); })
-            // .y0(height - margins.bottom)
-
-        const newline = line(data)
+        const newarea = area(data)
 
         return (
-            <path className="line" fill="url(#diagonal-stripe-2)" d={newline}></path>
+            <path className="line" fill={fill_color} d={newarea}></path>
             
         );
     }

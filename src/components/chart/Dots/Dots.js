@@ -8,17 +8,17 @@ export default class Dots extends Component {
         onClick: (d) => { }
     }
 
-    triggerOut(d, e) {
-        this.props.onMouseOut(e, d)
+    triggerOut(e) {
+        this.props.onMouseOut(e)
     }
 
-    triggerOver(d, e) {
+    triggerOver(e) {
         const {
             xScale,
             yScale
         } = this.props
 
-        this.props.onMouseOver(e, d, xScale, yScale)
+        this.props.onMouseOver(e, xScale, yScale)
     }
 
     render() {
@@ -35,8 +35,8 @@ export default class Dots extends Component {
                     stroke={dot_color}
                     cx = {xScale(datum.x)}
                     cy = {yScale(datum.y)}
-                    onMouseOut={this.triggerOut.bind(this, datum)}
-                    onClick={this.triggerOver.bind(this, datum)}
+                    onMouseOver={this.triggerOver.bind(this)}
+                    onMouseOut={this.triggerOut.bind(this)}
                 />
             )
         )
