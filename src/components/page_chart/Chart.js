@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import {extent} from 'd3'
 import {format} from 'd3-time'
-import { timeFormat } from 'd3-time-format'
+import { timeFormat, timeParse } from 'd3-time-format'
+import Lines from './Line/Line'
 import jQuery from 'jquery';
 import Axes from './Axes/Axes'
 import Legend from './Legend/Legend'
@@ -53,13 +54,13 @@ class Chart extends Component {
             width: this.props.parentWidth,
             height: 500
         }
-        var parseDate = timeFormat("%b-%d").parse;
+        var parseDate = timeParse("%b-%d");
         var x = function (d) {
-            return timeFormat("%b-%d", d.datetime)
+            return parseDate(d.datetime)
         }
         //const maxValue = Math.max(...data.map(d => d.value1))
         const xScale = this.xScale
-            .domain(extent(data, function (d) { return x(d); }))
+            .domain(extent(data, function (d) { return d.datetime; }))
             .range([margins.left, svgDimensions.width - margins.right])
         const yScale = this.yScale
             .domain([0, 800])
@@ -73,6 +74,10 @@ class Chart extends Component {
                         svgDimensions={svgDimensions}
                     />
                     <Legend />
+                    {/* <Lines
+                        scales={{ xScale, yScale }}
+                        data={this.props.data}
+                    /> */}
                     <AxisLabel 
                         svgDimensions={svgDimensions}
                         // yLabel={yLabels}

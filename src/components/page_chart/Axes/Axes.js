@@ -12,7 +12,7 @@ export default ({ scales, margins, svgDimensions }) => {
         scale: scales.xScale,
         translate: `translate(0, ${height - margins.bottom})`,
         tickSize: height - margins.top - margins.bottom,
-        tickFormat: timeFormat("%b")
+        //tickFormat: timeFormat("%b")
     }
 
     const yProps = {
