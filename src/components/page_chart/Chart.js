@@ -170,19 +170,30 @@ class Chart extends Component {
                         id = "tooltip_rect"
                         className = "tooltip_rect"
                         key={Math.random()}
-                        x={margins.left}
-                        y={yScale(maxValue+30)}
-                        height={maxValue - minValue + 50}
+                        x={margins.left-50}
+                        y={yScale(maxValue+100)}
+                        height={maxValue - minValue+80}
                         fill="#000" 
-                        fillOpacity="0.6"
+                        fillOpacity="0"
                         pointerEvents = "all"
-                        width={svgDimensions.width- margins.right-margins.left}
-                        onMouseOut = {(event) => {
-                            if (this.state.tooltip_display)
+                        width={svgDimensions.width- margins.right-margins.left+100}
+                        onMouseOver={(event) => {
                                 this.setState({
                                     tooltip_display: false
                                 })
                         }}
+                    />
+                    <rect 
+                        id = "tooltip_rect"
+                        className = "tooltip_rect"
+                        key={Math.random()}
+                        x={margins.left}
+                        y={yScale(maxValue+30)}
+                        height={maxValue - minValue}
+                        fill="#000" 
+                        fillOpacity="0"
+                        pointerEvents = "all"
+                        width={svgDimensions.width- margins.right-margins.left}
                         onMouseMove={(event) => {
                             var current_value = clientPoint(event.target, event)
                             var current_xvalue = current_value[0]

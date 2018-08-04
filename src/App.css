@@ -1071,3 +1071,21 @@ a:hover, a:focus{
             border:1px solid #ccc;
             border-radius:10px;
         }
+        .svg_container{
+            position:relative;
+        }
+        .svg_container .filter-button{
+            top:35px;
+            z-index:500;
+            position:absolute;
+            right:50px;
+        }
+        .filter-dropdown{
+            margin-right:10px !important;
+            border: solid 1px #009e8e !important;
+            background:#00928e !important;
+            color:white !important;
+        }
+        .chart_svg{
+            padding-top:20px;
+        }

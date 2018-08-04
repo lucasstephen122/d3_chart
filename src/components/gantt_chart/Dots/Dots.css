@@ -1,0 +1,16 @@
+.dot {
+    fill: #fff;
+    stroke-width: 2px;
+}
+
+.dot {
+    display: none;
+}
+
+.dot~.dot {
+    display: block;
+}
+
+.dot:last-of-type {
+    display: none;
+}

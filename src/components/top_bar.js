@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem,Button } from 'reactstrap';
-import grid from '../images/grid.png';
-import jQuery from 'jquery';
-import Cards from './cards';
 import PubSub from 'pubsub-js';
 class App extends Component {
     constructor(props) {
         super(props);
         this.toggle1 = this.toggle1.bind(this);
         this.toggle2 = this.toggle2.bind(this);
+        this.toggle3 = this.toggle3.bind(this);
         this.state = {
           currentlayout: "grid",
           dropdownOpen1: false,
-          dropdownOpen2: false
+          dropdownOpen2: false,
+          dropdownOpen3: false
         };
       }
 
@@ -29,15 +28,19 @@ class App extends Component {
      this.setState(prevState => ({
        dropdownOpen2: !prevState.dropdownOpen2
      }));
-   }
-    
+    }
+    toggle3() {
+      this.setState(prevState => ({
+        dropdownOpen3: !prevState.dropdownOpen3
+      }));
+     }
      render() {
           const gridstatus = this.state.currentlayout === "grid" ? "active" : "";
           const liststatus = this.state.currentlayout === "list" ? "active" : "";
           return (
                <div className="nav-bar d-flex top-bar">
                     <div className='col-md-6 top-bar-1'>
-                        <label className='title'>Tank Inventory Forecast</label>
+                        <label className='title'>Cargo Upside Simulation</label>
                         <label className="vertical-line"></label>
                         <label className="sub-title">Last Updated : 31 June 2018</label>
                     </div>
@@ -59,6 +62,15 @@ class App extends Component {
                       <DropdownMenu>
                         <DropdownItem>Quarter1</DropdownItem>
                         <DropdownItem>Quarter2</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                    <Dropdown isOpen={this.state.dropdownOpen3} size="sm" className="pull-right" toggle={this.toggle3}>
+                      <DropdownToggle caret className="custom-dropdown-toggle">
+                        Month
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem>January</DropdownItem>
+                        <DropdownItem>Februry</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
                     </div>
