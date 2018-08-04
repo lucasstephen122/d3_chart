@@ -24,7 +24,6 @@ export default class Tooltip extends Component {
                     r = "4"
                     cx = {tooltip_circle_x}
                     cy = {tooltip_circle_y}
-                    
                 />
                 <rect
                     x={tooltip_circle_x - 50}
@@ -38,7 +37,7 @@ export default class Tooltip extends Component {
                 >
                 </rect>
                 <text fill="#aaa" x={tooltip_circle_x-40} y={tooltip_circle_y+30} fontSize="14" >{tooltip_date}</text>
-                <text fill="#009e8e" x={tooltip_circle_x-15} y={tooltip_circle_y+50} fontSize="14" font-weight="bold">{tooltip_value}</text>
+                <text fill="#009e8e" x={tooltip_circle_x-15} y={tooltip_circle_y+50} fontSize="14" fontWeight="bold">{tooltip_value}</text>
             </g>
         )
     }

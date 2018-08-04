@@ -1,7 +1,5 @@
 import React from 'react'
 import Axis from '../Axis/Axis'
-import d3_time from 'd3-time'
-import {timeFormat} from 'd3-time-format'
 
 
 export default ({ scales, margins, svgDimensions }) => {

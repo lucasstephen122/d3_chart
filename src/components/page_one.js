@@ -15,9 +15,6 @@ class App extends Component {
 			                <div>
 								<Chart data={data}/>
 			                </div>
-							{/* <div>
-								<Chart data={data}/>
-			                </div> */}
 			            </div>
 			        </div>
 			    </div>

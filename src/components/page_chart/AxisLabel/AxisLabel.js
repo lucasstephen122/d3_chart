@@ -4,7 +4,6 @@ import './AxisLabel.css'
 export default class AxisLabel extends Component {
 
     createLabels = () => {
-        // alert(1)
         const { svgDimensions, xLabel, yLabel,x_value,y_value } = this.props
         let yLabel_array = yLabel.split("  ");
         let yLabel_spans = []
@@ -24,8 +23,6 @@ export default class AxisLabel extends Component {
 
         return (
             <g>
-                {/* {this.createLabels()} */}
-                {/* <text x="120" y="80" className="y_label">{yLabel}</text> */}
                 <text x={x_value} y={y_value} className="y_label">
                     {this.createLabels()}
                 </text>

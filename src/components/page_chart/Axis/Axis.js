@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { timeFormat, timeParse } from 'd3-time-format'
+import { timeFormat } from 'd3-time-format'
 import * as d3Axis from 'd3-axis'
 import { select as d3Select } from 'd3-selection'
 
