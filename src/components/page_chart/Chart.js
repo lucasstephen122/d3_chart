@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { scaleLinear, scaleTime } from 'd3-scale'
-import {extent} from 'd3'
+import { extent, bisector} from 'd3'
 import { timeParse } from 'd3-time-format'
 import Lines from './Line/Line'
 import Bars from './Bar/Bar'
@@ -11,6 +11,7 @@ import Axes1 from './Axes/Axes1'
 import Tooltip from './Tooltip/Tooltip'
 import Legend from './Legend/Legend'
 import DotLine from './DotLine/DotLine'
+import * as moment from 'moment'
 import AxisLabel from './AxisLabel/AxisLabel'
 import ResponsiveWrapper from './ResponsiveWrapper/ResponsiveWrapper'
 import { select as d3Select, clientPoint } from 'd3-selection'
@@ -21,6 +22,8 @@ class Chart extends Component {
         this.xScale = scaleTime()
         this.yScale = scaleLinear()
         this.yScale1 = scaleLinear()
+        this.data = [];
+        this.bisectDate = bisector(function (d) { return d.datetime; }).left;
         this.state = {
             xTooltip: null,
             yTooltip: null,
@@ -28,7 +31,7 @@ class Chart extends Component {
             containerwidth:jQuery(".Responsive-wrapper").width()
         }
         this.subscriber = this.subscriber.bind(this);
-        let x_scale;
+        
     }
 
     mouseOut(e, d) {
@@ -46,24 +49,30 @@ class Chart extends Component {
             t_opacity: 1
         })
     }
+
     mouseMove(e){
         var current_value = clientPoint(e.target, e)
         var current_xvalue = current_value[0]
         console.log(this.xScale.invert(current_xvalue))
-        
+        var x0 = this.xScale.invert(current_xvalue);
+        console.log(moment(x0).format("YYYY-MM-DD"))
+        var cursor_date = moment(x0).format("YYYY-MM-DD")
+        console.log(this.bisectDate(this.data, cursor_date, 1))
+        var tooltip_y = this.yScale(this.data[this.bisectDate(this.data, cursor_date, 1)].value3) + 70
 
         this.setState({
             xTooltip: e.pageX,
-            yTooltip: e.pageY,
+            yTooltip: tooltip_y,
             t_opacity: 1
         })
     }
+
     subscriber(msg, data) {
         this.setState({
             containerwidth: jQuery(".Responsive-wrapper").width()
         });
         
-     }
+    }
 
     render() {
         const data = this.props.data
@@ -90,15 +99,17 @@ class Chart extends Component {
             d.parsed_date = parseDate(d.datetime);
             new_data.push(d)
         })
+        this.data = new_data;
         const xScale = this.xScale
             .domain(extent(new_data, function (d) { return d.parsed_date; }))
             .range([margins.left, svgDimensions.width - margins.right])
         
-        this.x_scale = xScale
+        //this.x_scale = xScale
         
         const yScale = this.yScale
             .domain([0, 800])
             .range([svgSubDimentions1.height - margins.bottom, margins.top])
+        
         const yScale1 = this.yScale1
             .domain([-6, 2])
             .range([svgSubDimentions2.height-margins.bottom, svgSubDimentions1.height-margins.bottom])
@@ -147,9 +158,9 @@ class Chart extends Component {
                         key={Math.random()}
                         x={margins.left}
                         y={yScale(maxValue+20)}
-                        height={120}
+                        height={maxValue - minValue}
                         fill="#ffffff" 
-                        fill-opacity="0"
+                        fillOpacity="0"
                         width={svgDimensions.width- margins.right-margins.left}
                         // onMouseOver = {this.triggerOver.bind(this)}
                         onMouseMove = {this.mouseMove.bind(this)}
