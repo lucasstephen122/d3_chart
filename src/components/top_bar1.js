@@ -64,6 +64,15 @@ class App extends Component {
                         <DropdownItem>Quarter2</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
+                    <Dropdown isOpen={this.state.dropdownOpen3} size="sm" className="pull-right" toggle={this.toggle3}>
+                      <DropdownToggle caret className="custom-dropdown-toggle">
+                        Month
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem>January</DropdownItem>
+                        <DropdownItem>Februry</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
                     </div>
                </div>
 

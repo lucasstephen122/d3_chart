@@ -1,5 +1,5 @@
 import React from 'react';
-import TopBar from './top_bar';
+import TopBar from './top_bar1';
 import PageOne from './page_two';
 
 const dashboard4 = (props) => {
