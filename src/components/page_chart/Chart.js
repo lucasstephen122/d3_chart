@@ -13,6 +13,8 @@ import Legend from './Legend/Legend'
 import DotLine from './DotLine/DotLine'
 import AxisLabel from './AxisLabel/AxisLabel'
 import ResponsiveWrapper from './ResponsiveWrapper/ResponsiveWrapper'
+import { select as d3Select, clientPoint } from 'd3-selection'
+import d3 from 'd3';
 class Chart extends Component {
     constructor(props) {
         super(props)
@@ -26,6 +28,7 @@ class Chart extends Component {
             containerwidth:jQuery(".Responsive-wrapper").width()
         }
         this.subscriber = this.subscriber.bind(this);
+        let x_scale;
     }
 
     mouseOut(e, d) {
@@ -42,9 +45,19 @@ class Chart extends Component {
             yTooltip: e.pageY,
             t_opacity: 1
         })
-        console.log("234");
     }
+    mouseMove(e){
+        var current_value = clientPoint(e.target, e)
+        var current_xvalue = current_value[0]
+        console.log(this.xScale.invert(current_xvalue))
+        
 
+        this.setState({
+            xTooltip: e.pageX,
+            yTooltip: e.pageY,
+            t_opacity: 1
+        })
+    }
     subscriber(msg, data) {
         this.setState({
             containerwidth: jQuery(".Responsive-wrapper").width()
@@ -70,8 +83,6 @@ class Chart extends Component {
         }
         const maxValue = Math.max(...data.map(d => d.value3))
         const minValue = Math.min(...data.map(d => d.value3))
-        console.log(maxValue);
-        console.log(minValue);
         var parseDate = timeParse("%Y-%m-%d");
         var new_data = []
         data.forEach(function(item){
@@ -82,12 +93,19 @@ class Chart extends Component {
         const xScale = this.xScale
             .domain(extent(new_data, function (d) { return d.parsed_date; }))
             .range([margins.left, svgDimensions.width - margins.right])
+        
+        this.x_scale = xScale
+        
         const yScale = this.yScale
             .domain([0, 800])
             .range([svgSubDimentions1.height - margins.bottom, margins.top])
         const yScale1 = this.yScale1
             .domain([-6, 2])
             .range([svgSubDimentions2.height-margins.bottom, svgSubDimentions1.height-margins.bottom])
+
+        //tooltip circle
+        var focus_container = <g className = "tooltip_circle_g"></g>
+        const focus_circle = <circle className = "tooltip_circle y" r="4"></circle>
         return (
             <div>
                 <svg width={svgDimensions.width} height={svgDimensions.height}>
@@ -116,13 +134,6 @@ class Chart extends Component {
                         scales = {{ xScale, yScale }} 
                         margins = {margins}
                     />
-                    <rect 
-                        key={Math.random()}
-                        x={margins.left}
-                        y={yScale(maxValue+20)}
-                        height={120}
-                        width={svgDimensions.width- margins.right-margins.left}
-                    />
                     <Lines
                         scales={{ xScale, yScale }}
                         data={new_data}
@@ -130,6 +141,18 @@ class Chart extends Component {
                     <Areas
                         scales={{ xScale, yScale }}
                         data={new_data}
+                    />
+                    <rect 
+                        className = "tooltip_rect"
+                        key={Math.random()}
+                        x={margins.left}
+                        y={yScale(maxValue+20)}
+                        height={120}
+                        fill="#ffffff" 
+                        fill-opacity="0"
+                        width={svgDimensions.width- margins.right-margins.left}
+                        // onMouseOver = {this.triggerOver.bind(this)}
+                        onMouseMove = {this.mouseMove.bind(this)}
                     />
                     <Bars
                         svgDimensions={svgDimensions}
