@@ -28,50 +28,69 @@ class Chart extends Component {
             xTooltip: null,
             yTooltip: null,
             t_opacity: null,
-            containerwidth:jQuery(".Responsive-wrapper").width()
+            containerwidth:jQuery(".Responsive-wrapper").width(),
+            tooltip_circle_x:100,
+            tooltip_circle_y:100,
+            tooltip_date:"0000-00-00",
+            tooltip_value:"",
+            tooltip_display:false
         }
         this.subscriber = this.subscriber.bind(this);
         
     }
-
-    mouseOut(e, d) {
+    componentDidMount () {
+        /* var tooltip_rect = document.getElementById("tooltip_rect")
+        tooltip_rect.addEventListener("mouseout", function( event ) {   
+            this.mouseOut(event);
+        });
+        tooltip_rect.addEventListener("mousemove", function( event ) {   
+            console.log('event', event);
+            this.mouseMove(event);
+        }); */
+    }
+    mouseOut(e) {
         this.setState({
-            xTooltip: null,
-            yTooltip: null,
-            t_opacity: null
+            tooltip_display : false
         })
     }
 
-    mouseOver(e, d) {
-        this.setState({
-            xTooltip: e.pageX,
-            yTooltip: e.pageY,
-            t_opacity: 1
-        })
+    mouseOver(e) {
+        this.tooltip_event(e)
     }
 
     mouseMove(e){
+        this.tooltip_event(e)
+    }
+    tooltip_event(e){
         var current_value = clientPoint(e.target, e)
         var current_xvalue = current_value[0]
-        console.log(this.xScale.invert(current_xvalue))
+        var current_yvalue = current_value[1]
+        
         var x0 = this.xScale.invert(current_xvalue);
-        console.log(moment(x0).format("YYYY-MM-DD"))
+        var y0 = this.yScale.invert(current_yvalue);
+        console.log(y0)
         var cursor_date = moment(x0).format("YYYY-MM-DD")
-        console.log(this.bisectDate(this.data, cursor_date, 1))
-        var tooltip_y = this.yScale(this.data[this.bisectDate(this.data, cursor_date, 1)].value3) + 70
+        var i = this.bisectDate(this.data, cursor_date, 1)
+        // var d0 = this.data[i-1]
+        var d = this.data[i]
+        // var d = x0 - d0.date > d1.date - x0 ? d1 : d0
+        var parseDate = timeParse("%Y-%m-%d");
 
         this.setState({
-            xTooltip: e.pageX,
-            yTooltip: tooltip_y,
-            t_opacity: 1
+            // xTooltip: e.pageX,
+            // yTooltip: e.pageY,
+            // t_opacity: 1,
+            tooltip_date : d.datetime,
+            tooltip_value : d.value3,
+            tooltip_circle_x : this.xScale(parseDate(d.datetime)),
+            tooltip_circle_y : this.yScale(d.value3),
+            tooltip_display : true
         })
     }
-
     subscriber(msg, data) {
         this.setState({
             containerwidth: jQuery(".Responsive-wrapper").width()
         });
-        
     }
 
     render() {
@@ -115,11 +134,17 @@ class Chart extends Component {
             .range([svgSubDimentions2.height-margins.bottom, svgSubDimentions1.height-margins.bottom])
 
         //tooltip circle
-        var focus_container = <g className = "tooltip_circle_g"></g>
-        const focus_circle = <circle className = "tooltip_circle y" r="4"></circle>
         return (
             <div>
                 <svg width={svgDimensions.width} height={svgDimensions.height}>
+                <defs>
+                    <filter id="f1" x="0" y="0" width="200%" height="200%">
+                    <feOffset result="offOut" in="SourceGraphic" dx="2" dy="2" />
+                    <feColorMatrix result = "matrixOut" in = "offOut" type = "matrix" values = "0.5 0 0 0 0 0 0.5 0 0 0 0 0 0.5 0 0 0 0 0 1 0"/>
+                    <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
+                    <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                    </filter>
+                </defs>
                     <Axes
                         scales={{ xScale, yScale }}
                         margins={margins}
@@ -154,6 +179,7 @@ class Chart extends Component {
                         data={new_data}
                     />
                     <rect 
+                        id = "tooltip_rect"
                         className = "tooltip_rect"
                         key={Math.random()}
                         x={margins.left}
@@ -161,9 +187,10 @@ class Chart extends Component {
                         height={maxValue - minValue}
                         fill="#ffffff" 
                         fillOpacity="0"
+                        onMouseOut = {this.mouseOut.bind(this)}
                         width={svgDimensions.width- margins.right-margins.left}
-                        // onMouseOver = {this.triggerOver.bind(this)}
-                        onMouseMove = {this.mouseMove.bind(this)}
+                        onMouseMove = {this.mouseOver.bind(this)}
+                        
                     />
                     <Bars
                         svgDimensions={svgDimensions}
@@ -191,8 +218,14 @@ class Chart extends Component {
                         x_value = {100}
                         y_value = {450} 
                     />
+                    <Tooltip 
+                        {...this.state}
+                        svgDimensions = {svgDimensions}
+                        margins={margins}
+                        scales={{ xScale, yScale }}
+                    />
                 </svg>
-                <Tooltip {...this.state} />
+                
             </div>
         )
     }

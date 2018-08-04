@@ -1,26 +1,45 @@
 import React, { Component } from 'react'
 import './Tooltip.css'
 
-export default class Dots extends Component {
+export default class Tooltip extends Component {
 
     render() {
-        const { xTooltip, yTooltip, t_opacity} = this.props
-
-        var style = {
-            left: xTooltip? xTooltip: -10000,
-            top: yTooltip? yTooltip: -10000,
-            opacity: t_opacity? 1: 0
+        const { tooltip_value, tooltip_date, tooltip_circle_x , tooltip_circle_y , tooltip_display } = this.props
+        var style;
+        if(!tooltip_display){
+            style = {
+                display:'none', 
+            }
+        }else{
+            style = {
+                display:'block', 
+            }
         }
-
         return (
-            <div className="tooltip" style={style}>
-                <div className="dot-info-div">
-                    <div className="dot-info-1">
-                        <p className="dot-info-p-title">DATE</p>
-                        <p className="dot-info-p-value">20/04/2018</p>
-                    </div>
-                </div>
-            </div>
+            <g className="" opacity="1"  style={style}>
+                <circle
+                    className = "y"
+                    fill = "#58478d"
+                    stroke = "#58478d"
+                    r = "4"
+                    cx = {tooltip_circle_x}
+                    cy = {tooltip_circle_y}
+                    
+                />
+                <rect
+                    x={tooltip_circle_x - 50}
+                    y={tooltip_circle_y + 10}
+                    height="50"
+                    fill="white" 
+                    width="100"
+                    rx = "5"
+                    ry = "5"
+                    filter="url(#f1)"
+                >
+                </rect>
+                <text fill="#aaa" x={tooltip_circle_x-40} y={tooltip_circle_y+30} fontSize="14" >{tooltip_date}</text>
+                <text fill="#009e8e" x={tooltip_circle_x-15} y={tooltip_circle_y+50} fontSize="14" font-weight="bold">{tooltip_value}</text>
+            </g>
         )
     }
 }
