@@ -16,7 +16,7 @@ export default class Tooltip extends Component {
             }
         }
         return (
-            <g className="" opacity="1"  style={style}>
+            <g className="" opacity="1"  style={style} id="tooltip_container">
                 <circle
                     className = "y"
                     fill = "#58478d"

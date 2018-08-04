@@ -39,14 +39,14 @@ class Chart extends Component {
         
     }
     componentDidMount () {
-        /* var tooltip_rect = document.getElementById("tooltip_rect")
-        tooltip_rect.addEventListener("mouseout", function( event ) {   
-            this.mouseOut(event);
-        });
-        tooltip_rect.addEventListener("mousemove", function( event ) {   
-            console.log('event', event);
-            this.mouseMove(event);
-        }); */
+        // var tooltip_rect = document.getElementById("tooltip_rect")
+        // tooltip_rect.addEventListener("mouseout", function( event ) {   
+        //     this.mouseOut(event);
+        // });
+        // tooltip_rect.addEventListener("mousemove", function( event ) {   
+        //     console.log('event', event);
+            
+        // });
     }
     mouseOut(e) {
         this.setState({
