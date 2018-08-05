@@ -90,7 +90,7 @@ class Chart extends Component {
         // const height = 14;
         const height = Math.max(0, yScale.bandwidth());
         return (
-            <div class='svg_container'>
+            <div className='svg_container'>
                 <Dropdown group isOpen={this.state.dropdownOpen1} size="sm" className="filter-button" toggle={this.toggle}>
                       <DropdownToggle caret className="filter-dropdown">
                         Filter
