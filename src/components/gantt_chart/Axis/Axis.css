@@ -1,17 +1,14 @@
-.Axis-Left line,
-.Axis-Bottom line {
-    fill: none;
-    stroke: #777777;
-    shape-rendering: crispEdges;
+.axis path,
+.axis line {
+    stroke: #E0E0E0;
 }
-.Axis-Left path,
-.Axis-Bottom path {
-    stroke: #777777;
+
+.axis text {
+    font-size: 11px;
+    fill: black;
 }
-.Axis-Left text,
-.Axis-Bottom text {
-    fill: #777777;
-}
-.text_none .tick text{
-    display:none;
-}
+
+    .axis_bottom text {
+        /* transform: rotate(-45deg); */
+        text-anchor: end;
+    }
