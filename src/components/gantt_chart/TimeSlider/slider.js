@@ -24,9 +24,9 @@ export default class TimeSlider extends Component {
         };
         return (
             <g className="slider" transform={`translate(${start_x} , ${start_y})`}>
-                <line x1="0" y1="8" x2={width} y2="8" stroke="#ccc" stroke-width="2"></line>
-                <ellipse cx={settings.min} cy={settings.radius} rx={settings.radius} ry={settings.radius} fill={settings.color} fill-opacity="1" className = "slider_circle"></ellipse>
-                <ellipse cx={settings.max} cy={settings.radius} rx={settings.radius} ry={settings.radius} fill={settings.color} fill-opacity="1" className = "slider_circle"></ellipse>
+                <line x1="0" y1="8" x2={width} y2="8" stroke="#ccc" strokeWidth="2"></line>
+                <ellipse cx={settings.min} cy={settings.radius} rx={settings.radius} ry={settings.radius} fill={settings.color} fillOpacity="1" className = "slider_circle"></ellipse>
+                <ellipse cx={settings.max} cy={settings.radius} rx={settings.radius} ry={settings.radius} fill={settings.color} fillOpacity="1" className = "slider_circle"></ellipse>
             </g>
         )
     }
