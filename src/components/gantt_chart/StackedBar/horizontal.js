@@ -11,7 +11,6 @@ export default class StackedBarHorizontal extends Component {
 
         const bars = data.values.map((datum) => {
             const dateInitial = new Date(datum.dateStart);
-            console.log(dateInitial)
             const x = xScale(dateInitial);
             const width = xScale(new Date(datum.dateEnd)) - x;
 

@@ -160,4 +160,74 @@ export default [
             },
         ],
     },
+    {
+        titleBar: 'P.Delima',
+        values: [
+            {
+                title: 'status-1',
+                dateStart: '2017-04-10 11:16:05',
+                dateEnd: '2017-04-12 15:16:05',
+            },
+            {
+                title: 'status-2',
+                dateStart: '2017-04-15 18:16:05',
+                dateEnd: '2017-04-17 21:16:05',
+            },
+        ],
+    },
+    {
+        titleBar: 'P.Nilam',
+        values: [
+            {
+                title: 'status-1',
+                dateStart: '2017-04-15 11:16:05',
+                dateEnd: '2017-04-18 15:16:05',
+            },
+        ],
+    },
+    {
+        titleBar: 'Korea 1(HP)',
+        values: [
+            {
+                title: 'status-1',
+                dateStart: '2017-04-12 11:16:05',
+                dateEnd: '2017-04-16 15:16:05',
+            },
+        ],
+    },
+    {
+        titleBar: 'Korea 1(GP)',
+        values: [
+            {
+                title: 'status-2',
+                dateStart: '2017-04-14 01:16:05',
+                dateEnd: '2017-04-19 15:16:05',
+            },
+        ],
+    },
+    {
+        titleBar: 'SHLNG (SH)',
+        values: [
+            {
+                title: 'status-2',
+                dateStart: '2017-04-11 01:16:05',
+                dateEnd: '2017-04-13 15:16:05',
+            },
+        ],
+    },
+    {
+        titleBar: 'P.Intan 1',
+        values: [
+            {
+                title: 'status-1',
+                dateStart: '2017-04-14 01:16:05',
+                dateEnd: '2017-04-15 15:16:05',
+            },
+            {
+                title: 'status-2',
+                dateStart: '2017-04-17 01:16:05',
+                dateEnd: '2017-04-18 15:16:05',
+            },
+        ],
+    },
 ];

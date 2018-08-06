@@ -7,13 +7,15 @@ import {timeDay} from 'd3-time';
 
 import Axes from '../Axes';
 import StackedBarHorizontal from '../StackedBar/horizontal';
+import TimeSlider from '../TimeSlider/slider';
 import ResponsiveWrapper from '../ResponsiveWrapper/ResponsiveWrapper';
 import Legend from '../Legend/Legend'
 // import BarDescription from '../Legends';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem,Button } from 'reactstrap';
 const defaultPaddingMultiplier = 0;
 const DEFAULT_FILL_OPACITY = 1;
-
+const slider_x = 80;
+const slider_y = 90
 class Chart extends Component {
     constructor(props) {
         super(props);
@@ -52,13 +54,12 @@ class Chart extends Component {
     render() {
         const { data, axesProps, margins, stackColors, paddingMultiplier, fillOpacity } = this.props;
         const { legend, padding, tickFormat, ticksCount } = axesProps;
-        const defaultMargins = { top: 70, right: 30, bottom: 80, left: 100 };
+        const defaultMargins = { top: 150, right: 30, bottom: 80, left: 100 };
         const canvasMargins = margins || defaultMargins;
         const svgDimensions = {
             width: Math.max(this.props.parentWidth, 300),
             height: 700,
         };
-
         const datePlainList = data.reduce((array, item)=>{
             item.values.forEach((item) => {
                 array.push(item.dateStart);
@@ -67,9 +68,8 @@ class Chart extends Component {
             return array;
         }, []);
 
-        const yDomain = data.map((item) => (item.titleBar));
+        const yDomain = data.map((item) => (item.titleBar)).reverse();
         const datesDomain = d3extent(datePlainList, d => new Date(d));
-
         const AxesTicksCount = {
             xAxis: Math.min(
                 Math.floor((datesDomain[1] - datesDomain[0]) / (1000 * 60 * 60 * 24)),
@@ -86,8 +86,8 @@ class Chart extends Component {
             .padding(paddingMultiplier || defaultPaddingMultiplier)
             .domain(yDomain)
             .range([svgDimensions.height - canvasMargins.bottom, canvasMargins.top]);
-
         // const height = 14;
+        console.log(datesDomain)
         const height = Math.max(0, yScale.bandwidth());
         return (
             <div className='svg_container'>
@@ -100,6 +100,7 @@ class Chart extends Component {
                         <DropdownItem>filter</DropdownItem>
                       </DropdownMenu>
                 </Dropdown>
+                
                 {/* <BarDescription stackColors={stackColors} left={canvasMargins.left} /> */}
                 <svg
                     className = "chart_svg"
@@ -108,6 +109,11 @@ class Chart extends Component {
                     width={svgDimensions.width}
                     height={svgDimensions.height}>
                     <Legend />
+                    <TimeSlider
+                        width = {svgDimensions.width-slider_x * 2}
+                        start_x = {slider_x}
+                        start_y = {slider_y}
+                    />
                     <Axes
                         scales={{xScale, yScale}}
                         padding={padding}
