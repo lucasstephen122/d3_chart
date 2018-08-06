@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import * as d3Axis from 'd3-axis';
 import {select as d3Select} from 'd3-selection';
-
+import * as d3 from "d3"
 import './Axis.css';
 
 export default class Axis extends Component {
+    
     componentDidMount() {
         this.renderAxis();
     }
@@ -26,7 +27,6 @@ export default class Axis extends Component {
             .ticks(this.props.ticksCount);
 
         axis.tickFormat(this.props.tickFormat);
-
         d3Select(this.axisRootElement).call(axis);
     }
 
@@ -49,7 +49,6 @@ export default class Axis extends Component {
 
     render() {
         const {legend, translate} = this.props;
-        
         return (
             <g>
                 <g
