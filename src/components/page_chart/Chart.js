@@ -3,6 +3,7 @@ import { scaleLinear, scaleTime } from 'd3-scale'
 import { extent, bisector} from 'd3'
 import { timeParse } from 'd3-time-format'
 import Lines from './Line/Line'
+import animateWithEase from './Line/Animate';
 import Bars from './Bar/Bar'
 import Areas from './Area/Area'
 import jQuery from 'jquery';
@@ -32,49 +33,72 @@ class Chart extends Component {
             tooltip_circle_y:100,
             tooltip_date:"0000-00-00",
             tooltip_value:"",
-            tooltip_display:false
+            tooltip_display:false,
+            tooltip_circle_display:true,
+            chart_display_1:true,
+            chart_display_2:true,
+            chart_display_3:true,
+            chart_display_4:true,
         }
         this.subscriber = this.subscriber.bind(this);
         
     }
 
-    /* mouseOut(e) {
-        console.log("out");
+    onClickLegend(event , type){
+        if(type == 1){
+            this.setState({
+                chart_display_1 : !this.state.chart_display_1
+            })
+        }
+        if(type == 2){
+            this.setState({
+                chart_display_2 : !this.state.chart_display_2
+            })
+        }
+        if(type == 3){
+            this.setState({
+                chart_display_3 : !this.state.chart_display_3
+            })
+        }
+        if(type == 4){
+            this.setState({
+                chart_display_4 : !this.state.chart_display_4
+            })
+        }
+    }
+    triggerOut(e) {
         this.setState({
-            tooltip_display : false
+            tooltip_display: false
         })
     }
 
-    mouseOver(e) {
-        console.log("over")
-        //this.tooltip_event(e)
-    }
-
-    mouseMove(e){
-        console.log("move")
-        //this.tooltip_event(e)
-    }
-    tooltip_event(e){
-        var current_value = clientPoint(e.target, e)
+    triggerOver(event,type) {
+        var current_value = clientPoint(event.target, event)
         var current_xvalue = current_value[0]
-        var current_yvalue = current_value[1]
-        
+
         var x0 = this.xScale.invert(current_xvalue);
-        var y0 = this.yScale.invert(current_yvalue);
+
         var cursor_date = moment(x0).format("YYYY-MM-DD")
         var i = this.bisectDate(this.data, cursor_date, 1)
         var d = this.data[i]
         var parseDate = timeParse("%Y-%m-%d");
-
+        var tooltip_value , tooltip_circle_y;
+        if(type == 1){
+            tooltip_value = d.value4
+            tooltip_circle_y = this.yScale1(d.value4)-70
+        }else if(type == 2){
+            tooltip_value = d.value5
+            tooltip_circle_y = this.yScale1(0)-70
+        }
         this.setState({
-            tooltip_date : d.datetime,
-            tooltip_value : d.value3,
-            tooltip_circle_x : this.xScale(parseDate(d.datetime)),
-            tooltip_circle_y : this.yScale(d.value3),
-            tooltip_display : true
+            tooltip_date: d.datetime,
+            tooltip_value: tooltip_value,
+            tooltip_circle_x: this.xScale(parseDate(d.datetime)),
+            tooltip_circle_y: tooltip_circle_y,
+            tooltip_display: true,
+            tooltip_circle_display:false
         })
-    } */
-
+    }
     subscriber(msg, data) {
         this.setState({
             containerwidth: jQuery(".Responsive-wrapper").width()
@@ -99,6 +123,8 @@ class Chart extends Component {
         var x1 
         const maxValue = Math.max(...data.map(d => d.value3))
         const minValue = Math.min(...data.map(d => d.value3))
+
+        
         var parseDate = timeParse("%Y-%m-%d");
         var new_data = []
         data.forEach(function(item){
@@ -120,7 +146,6 @@ class Chart extends Component {
         const yScale1 = this.yScale1
             .domain([-6, 2])
             .range([svgSubDimentions2.height-margins.bottom, svgSubDimentions1.height-margins.bottom])
-
         //tooltip circle
         return (
             <div>
@@ -143,7 +168,9 @@ class Chart extends Component {
                         margins={margins}
                         svgDimensions={svgSubDimentions2}
                     />
-                    <Legend />
+                    <Legend 
+                        onClick1 = {this.onClickLegend.bind(this)}
+                    />
                     <DotLine 
                         y_value={580} 
                         text="Safety Ceiling" 
@@ -161,10 +188,12 @@ class Chart extends Component {
                     <Lines
                         scales={{ xScale, yScale }}
                         data={new_data}
+                        display = {this.state.chart_display_3}
                     />
                     <Areas
                         scales={{ xScale, yScale }}
                         data={new_data}
+                        display = {this.state.chart_display_4}
                     />
                     <rect 
                         id = "tooltip_rect"
@@ -212,7 +241,8 @@ class Chart extends Component {
                                     tooltip_value: d.value3,
                                     tooltip_circle_x: this.xScale(parseDate(d.datetime)),
                                     tooltip_circle_y: this.yScale(d.value3),
-                                    tooltip_display: true
+                                    tooltip_display: true,
+                                    tooltip_circle_display:true
                                 })
 
                                 this.x1 = cursor_date
@@ -231,6 +261,9 @@ class Chart extends Component {
                         scales={{ xScale, yScale1 }}
                         data={new_data}
                         type = {1}
+                        onMouseOver={this.triggerOver.bind(this)}
+                        onMouseOut={this.triggerOut.bind(this)}
+                        display = {this.state.chart_display_1}
                     />
                     <Bars
                         svgDimensions={svgDimensions}
@@ -238,6 +271,9 @@ class Chart extends Component {
                         scales={{ xScale, yScale1 }}
                         data={new_data}
                         type = {2}
+                        onMouseOver={this.triggerOver.bind(this)}
+                        onMouseOut={this.triggerOut.bind(this)}
+                        display = {this.state.chart_display_2}
                     />
                     <AxisLabel 
                         svgDimensions={svgDimensions}

@@ -24,3 +24,12 @@
     letter-spacing: normal;
     color: #7d878f;
 }
+.legend text,
+.legend circle,
+.legend rect{
+    cursor:pointer
+}
+.legend circle:hover,
+.legend rect:hover{
+    opacity:0.5
+}

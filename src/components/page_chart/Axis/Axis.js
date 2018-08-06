@@ -25,8 +25,6 @@ export default class Axis extends Component {
         if (this.props.orient == 'Bottom'){
             axis.tickFormat(timeFormat("%b ` %d"))
         }
-        
-        
         d3Select(this.axisElement).call(axis)
     }
 

@@ -4,7 +4,7 @@ import './Tooltip.css'
 export default class Tooltip extends Component {
 
     render() {
-        const { tooltip_value, tooltip_date, tooltip_circle_x , tooltip_circle_y , tooltip_display } = this.props
+        const { tooltip_value, tooltip_date, tooltip_circle_x , tooltip_circle_y , tooltip_display ,tooltip_circle_display } = this.props
         var style;
         if(!tooltip_display){
             style = {
@@ -12,6 +12,16 @@ export default class Tooltip extends Component {
             }
         }else{
             style = {
+                display:'block', 
+            }
+        }
+        var style_circle;
+        if(!tooltip_circle_display){
+            style_circle = {
+                display:'none', 
+            }
+        }else{
+            style_circle = {
                 display:'block', 
             }
         }
@@ -24,6 +34,7 @@ export default class Tooltip extends Component {
                     r = "4"
                     cx = {tooltip_circle_x}
                     cy = {tooltip_circle_y}
+                    style={style_circle}
                 />
                 <rect
                     x={tooltip_circle_x - 50}

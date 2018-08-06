@@ -1,0 +1,7 @@
+.bar_element{
+    cursor:pointer;
+    pointer-events: all;
+}
+.bar_element:hover{
+    opacity : .5;
+}
