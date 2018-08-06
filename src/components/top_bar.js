@@ -40,7 +40,7 @@ class App extends Component {
           return (
                <div className="nav-bar d-flex top-bar">
                     <div className='col-md-6 top-bar-1'>
-                        <label className='title'>Cargo Upside Simulation</label>
+                        <label className='title'>Tank Inventory Forecast</label>
                         <label className="vertical-line"></label>
                         <label className="sub-title">Last Updated : 31 June 2018</label>
                     </div>
