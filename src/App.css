@@ -1089,3 +1089,6 @@ a:hover, a:focus{
         .chart_svg{
             padding-top:20px;
         }
+        .chart_mask{
+            position:absolute
+        }

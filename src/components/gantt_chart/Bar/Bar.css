@@ -1,0 +1,6 @@
+.gantt_bar:hover{
+    opacity:0.7;
+}
+.gantt_bar{
+    cursor:pointer
+}

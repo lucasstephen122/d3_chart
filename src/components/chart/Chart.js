@@ -120,6 +120,7 @@ class Chart extends Component {
                         type={this.props.type}
                     />
                     <Legend />
+                    
                     <Dots
                         scales={{ xScale, yScale }}
                         margins={margins}

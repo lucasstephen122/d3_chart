@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-
+import './Bar.css';
 export default class Bar extends Component {
     render() {
         const {fill, height, width, x, y, datum, fillOpacity} = this.props;
-
         return (
             <rect
+                className = {`gantt_bar ${datum.title}`}
                 data-type='bar'
                 style={this.props.isClickable ? {cursor: 'pointer'} : {}}
                 x={x}

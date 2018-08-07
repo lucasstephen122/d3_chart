@@ -171,6 +171,9 @@ class Chart extends Component {
                     <Legend 
                         onClick1 = {this.onClickLegend.bind(this)}
                     />
+                    <line 
+                        stroke="#ccc" stroke-width="1" x1="0" y1="70" x2={svgDimensions.width} y2="70">
+                    </line>
                     <DotLine 
                         y_value={580} 
                         text="Safety Ceiling" 

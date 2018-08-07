@@ -13,7 +13,7 @@ class App extends Component {
 			        <div className="graph-tabs">
 			            <div className="graph-1 chart-pane">
 			                <div>
-								<Chart data={data}/>
+								<Chart data={data} time_slider={this.props.time_slider}/>
 			                </div>
 			            </div>
 			        </div>

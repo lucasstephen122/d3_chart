@@ -9,13 +9,13 @@ import * as moment from 'moment'
 import { timeFormat } from 'd3-time-format'
 import * as d3Axis from 'd3-axis'
 // import * as d3 from "d3";
-import jQuery from 'jquery';
 const DEFAULT_COLOR = '#37474F';
 
 export default class TimeSlider extends Component {
     constructor(props){
         super(props);
         const { start_x , start_y , width} = this.props
+        console.log(width)
         this.settings = {
             min: 0,
             max: width,
@@ -35,11 +35,8 @@ export default class TimeSlider extends Component {
             min: { value: 0 },
             max: { value: width }
         }
-        var min = moment("2017-01-01")
-        var max = moment("2017-12-01")
+        
         this.timeScale = scaleTime()
-            .domain([min.toDate(), max.toDate()])
-            .range([0, this.settings.max]);
         this.CallBack = this.CallBack.bind(this)
     }
     componentDidMount() {
@@ -49,6 +46,7 @@ export default class TimeSlider extends Component {
     }
     componentDidUpdate() {
         this.sliderEvent()
+        this.renderAxis()
     }
     handleDragStarted(d){
  
@@ -98,9 +96,8 @@ export default class TimeSlider extends Component {
         d3Select(this.axisElement).call(axis)
 
         var ticks = d3Select(this.axisElement).selectAll(".slider .tick");
-        console.log("ticks",ticks)
         ticks.each(function() {
-            d3Select(this).append("circle").attr("r", 5).attr("cx",0).attr("cy",1).attr("fill","#ccc"); 
+            d3Select(this).append("circle").attr("r", 4).attr("cx",0).attr("cy",1).attr("fill","#ccc"); 
         });
 
         ticks.selectAll("line").remove(); 
@@ -119,9 +116,19 @@ export default class TimeSlider extends Component {
         return ret;
     }
     render() {
-        const { start_x , start_y , width} = this.props
+        const { start_x , start_y , width , display} = this.props
+        var style;
+        if(!display){
+            style = {
+                display : 'none'
+            }
+        }
+        this.settings.max = width
+        var min = moment("2017-01-01")
+        var max = moment("2017-12-01")
+        this.timeScale.domain([min.toDate(), max.toDate()]).range([0, this.settings.max]);
         return (
-            <g className="slider" transform={`translate(${start_x} , ${start_y})`}>
+            <g className="slider" transform={`translate(${start_x} , ${start_y})`} style={style}>
                 <g
                     className={`Axis Axis-Bottom`}
                     ref={(el) => { this.axisElement = el; }}
@@ -136,7 +143,9 @@ export default class TimeSlider extends Component {
                     ry={this.settings.radius} 
                     fill={this.settings.color} 
                     fillOpacity="1" 
-                    className = "slider_circle"></ellipse>
+                    className = "slider_circle"
+                    filter="url(#ellipse_shadow)"
+                    ></ellipse>
                 <ellipse 
                     className="max_circle"
                     ref={(el) => { this.maxCircle = el; }}
@@ -146,7 +155,9 @@ export default class TimeSlider extends Component {
                     ry={this.settings.radius} 
                     fill={this.settings.color} 
                     fillOpacity="1" 
-                    className = "slider_circle"></ellipse>
+                    className = "slider_circle"
+                    filter="url(#ellipse_shadow)"
+                    ></ellipse>
             </g>
         )
     }

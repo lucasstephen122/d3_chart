@@ -22,10 +22,12 @@ export default class Axis extends Component {
         const axisType = `axis${this.props.orient}`;
         const axis = d3Axis[axisType]()
             .scale(this.props.scale)
-            .tickSize(this.props.tickSize)
+            // .tickSize(this.props.tickSize)
             .tickPadding([this.props.padding])
             .ticks(this.props.ticksCount);
-
+        if(this.props.orient == "Left"){
+            axis.tickSize(this.props.tickSize)
+        }
         axis.tickFormat(this.props.tickFormat);
         d3Select(this.axisRootElement).call(axis);
     }

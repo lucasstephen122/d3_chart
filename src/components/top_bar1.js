@@ -11,7 +11,8 @@ class App extends Component {
           currentlayout: "grid",
           dropdownOpen1: false,
           dropdownOpen2: false,
-          dropdownOpen3: false
+          dropdownOpen3: false,
+          button : true,
         };
       }
 
@@ -34,6 +35,9 @@ class App extends Component {
         dropdownOpen3: !prevState.dropdownOpen3
       }));
      }
+     toggleClick(e){
+        this.props.onYTDClicked(e)  
+     }
      render() {
           const gridstatus = this.state.currentlayout === "grid" ? "active" : "";
           const liststatus = this.state.currentlayout === "list" ? "active" : "";
@@ -45,7 +49,7 @@ class App extends Component {
                         <label className="sub-title">Last Updated : 31 June 2018</label>
                     </div>
                     <div className="col-md-6 top-bar-2">
-                    <Button className='pull-right margin- ' size='sm' color="info">YTD YEF</Button>{' '}
+                    <Button className='pull-right margin- ' onClick={this.toggleClick.bind(this)} size='sm' color="info">YTD YEF</Button>{' '}
                     <Dropdown group isOpen={this.state.dropdownOpen1} size="sm" className="pull-right" toggle={this.toggle1}>
                       <DropdownToggle caret className="custom-dropdown-toggle">
                         Year

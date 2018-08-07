@@ -26,25 +26,19 @@ const axesProps = {
         xAxis: timeFormat('%d %B %y'),
     },
 };
-export default () => {
-    const handleBarHover = (item) => {
-        console.log('hovered', item);
-    };
+class Chart extends Component {
 
-    const handleBarClick = (item) => {
-        console.log('clicked', item);
-    };
-        
-    return (
-
-            <GanttChart
-                axesProps = {axesProps}
-                data={data}
-                handleBarHover={handleBarHover}
-                handleBarClick={handleBarClick}
-                paddingMultiplier={0.6}
-                stackColors={stackColors} 
-            />
-            
-    );
+    render(){
+        return (
+                <GanttChart
+                    axesProps = {axesProps}
+                    data={data}
+                    paddingMultiplier={0.6}
+                    stackColors={stackColors} 
+                    time_slider = {this.props.time_slider}
+                />
+                
+        );
+    }
 }
+export default Chart;
