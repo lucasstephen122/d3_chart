@@ -16,6 +16,7 @@ export default class Axis extends Component {
 
     renderAxis() {
         const axisType = `axis${this.props.orient}`
+        console.log(axisType)
         const axis = d3Axis[axisType]()
                 .scale(this.props.scale)
                 .tickSize(-this.props.tickSize)

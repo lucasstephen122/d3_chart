@@ -4,7 +4,12 @@ import './slider.css';
 import {select as d3Select} from 'd3-selection';
 import { drag as d3Drag } from 'd3-drag';
 import {event as currentEvent} from 'd3';
+import {scaleBand, scaleTime} from 'd3-scale';
+import * as moment from 'moment'
+import { timeFormat } from 'd3-time-format'
+import * as d3Axis from 'd3-axis'
 // import * as d3 from "d3";
+import jQuery from 'jquery';
 const DEFAULT_COLOR = '#37474F';
 
 export default class TimeSlider extends Component {
@@ -26,33 +31,102 @@ export default class TimeSlider extends Component {
             // translater: translater,
             // callback: callback
         };
+        this.elements = {
+            min: { value: 0 },
+            max: { value: width }
+        }
+        var min = moment("2017-01-01")
+        var max = moment("2017-12-01")
+        this.timeScale = scaleTime()
+            .domain([min.toDate(), max.toDate()])
+            .range([0, this.settings.max]);
+        this.CallBack = this.CallBack.bind(this)
     }
     componentDidMount() {
+        this.sliderEvent()
+        this.renderAxis()
+        
+    }
+    componentDidUpdate() {
+        this.sliderEvent()
+    }
+    handleDragStarted(d){
+ 
+    }
+    handleDragged(){
+        // d3Select(this).attr("cx", currentEvent.x);
+        var x= currentEvent.x
+        if (x >= this.settings.min && x <= this.elements.max.value) {
+            this.elements.min.value = x;
+            d3Select(this.minCircle).attr('cx', x);
+            this.CallBack(this.translator(this.elements.min.value),this.translator(this.elements.max.value));
+        }
+    }
+    handleDragged1(){
+        // d3Select(this).attr("cx", currentEvent.x);
+        var x= currentEvent.x
+        if (x >= this.elements.min.value && x <= this.settings.max) {
+            this.elements.max.value = x;
+            d3Select(this.maxCircle).attr('cx', x);
+            this.CallBack(this.translator(this.elements.min.value),this.translator(this.elements.max.value));
+        }
+    }
+    CallBack(dstart,dend){
+        this.props.filterData(dstart.value,dend.value)
+    }
+    handleDragEnded(){
+        
+    }
+    sliderEvent(){
         d3Select(this.minCircle)
             .call(
                 d3Drag()
-                .on('start', this.handleDragStarted)
-                .on('drag', this.handleDragged)
-                .on('end', this.handleDragEnded)
+                .on('drag', this.handleDragged.bind(this))
+            );
+        d3Select(this.maxCircle)
+            .call(
+                d3Drag()
+                .on('drag', this.handleDragged1.bind(this))
             );
     }
-    componentDidUpdate() {
+    renderAxis() {
+        const axisType = "axisBottom"
+        const axis = d3Axis[axisType]()
+                .scale(this.timeScale)
+                .tickPadding([10])
+                .tickFormat(timeFormat("%b ` %d"))
+        d3Select(this.axisElement).call(axis)
+
+        var ticks = d3Select(this.axisElement).selectAll(".slider .tick");
+        console.log("ticks",ticks)
+        ticks.each(function() {
+            d3Select(this).append("circle").attr("r", 5).attr("cx",0).attr("cy",1).attr("fill","#ccc"); 
+        });
+
+        ticks.selectAll("line").remove(); 
     }
-    handleDragStarted(d){
-        console.log(this)
-    }
-    handleDragged(d){
-        console.log(currentEvent.x)
-        d3Select(this).attr("cx", currentEvent.x);
-    }
-    handleDragEnded(){
-        console.log("111")
+    translator(x){
+        var m = moment(this.timeScale.invert(x)),
+            ret = {
+              x: x,
+              text: null,
+              value: m
+            };
+        
+        if (m.isValid()) {
+          ret.text = m.format("YYYY-MM-DD");
+        }
+        return ret;
     }
     render() {
         const { start_x , start_y , width} = this.props
         return (
             <g className="slider" transform={`translate(${start_x} , ${start_y})`}>
-                <line x1="0" y1="8" x2={width} y2="8" stroke="#ccc" strokeWidth="2"></line>
+                <g
+                    className={`Axis Axis-Bottom`}
+                    ref={(el) => { this.axisElement = el; }}
+                    transform = "translate(0,8)"
+                />
                 <ellipse 
                     className="min_circle" 
                     ref={(el) => { this.minCircle = el; }}
@@ -63,8 +137,9 @@ export default class TimeSlider extends Component {
                     fill={this.settings.color} 
                     fillOpacity="1" 
                     className = "slider_circle"></ellipse>
-                {this.min_circle}
                 <ellipse 
+                    className="max_circle"
+                    ref={(el) => { this.maxCircle = el; }}
                     cx={this.settings.max} 
                     cy={this.settings.radius} 
                     rx={this.settings.radius} 

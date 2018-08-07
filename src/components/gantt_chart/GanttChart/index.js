@@ -10,6 +10,7 @@ import StackedBarHorizontal from '../StackedBar/horizontal';
 import TimeSlider from '../TimeSlider/slider';
 import ResponsiveWrapper from '../ResponsiveWrapper/ResponsiveWrapper';
 import Legend from '../Legend/Legend'
+import * as moment from 'moment'
 // import BarDescription from '../Legends';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem,Button } from 'reactstrap';
 const defaultPaddingMultiplier = 0;
@@ -19,11 +20,16 @@ const slider_y = 90
 class Chart extends Component {
     constructor(props) {
         super(props);
+        const { data } = this.props;
         this.toggle = this.toggle.bind(this);
         this.state = {
-          dropdownOpen: false,
+          dropdownOpen1: false,
+          chart_display : true
         };
+        this.chart_data = data
+        this.filterData = this.filterData.bind(this)
       }
+      
       toggle() {
         this.setState(prevState => ({
           dropdownOpen1: !prevState.dropdownOpen1
@@ -50,7 +56,25 @@ class Chart extends Component {
     handleBarClick = (event) => {
         this.props.handleBarClick(JSON.parse(event.target.getAttribute('data-datum')));
     };
-
+    filterData(dstart,dend){
+        dstart = dstart.subtract(1,'minute'); dend = dend.add(1,'minute');
+        const { data } = this.props;
+        var filter_data = data
+        var new_data = []
+        filter_data.forEach(function(data){
+            var dd = {titleBar:data.titleBar,values:[]}
+            data.values.forEach(function(item){
+                if(moment(item.dateStart).isBetween(dstart,dend) && moment(item.dateEnd).isBetween(dstart,dend)){
+                    dd.values.push(item)
+                }
+            })
+            new_data.push(dd)
+        })
+        this.chart_data = new_data
+        this.setState({
+            chart_display : true
+        })
+    }
     render() {
         const { data, axesProps, margins, stackColors, paddingMultiplier, fillOpacity } = this.props;
         const { legend, padding, tickFormat, ticksCount } = axesProps;
@@ -80,14 +104,13 @@ class Chart extends Component {
         const xScale = scaleTime()
             .domain(datesDomain)
             .range([canvasMargins.left, svgDimensions.width - canvasMargins.right])
-            .nice(timeDay, 1);
+            .nice(timeDay, 5);
 
         const yScale = scaleBand()
             .padding(paddingMultiplier || defaultPaddingMultiplier)
             .domain(yDomain)
             .range([svgDimensions.height - canvasMargins.bottom, canvasMargins.top]);
         // const height = 14;
-        console.log(datesDomain)
         const height = Math.max(0, yScale.bandwidth());
         return (
             <div className='svg_container'>
@@ -113,6 +136,8 @@ class Chart extends Component {
                         width = {svgDimensions.width-slider_x * 2}
                         start_x = {slider_x}
                         start_y = {slider_y}
+                        filterData = {this.filterData.bind(this)}
+                        xScale = {xScale}
                     />
                     <Axes
                         scales={{xScale, yScale}}
@@ -122,7 +147,7 @@ class Chart extends Component {
                         tickFormat={tickFormat}
                         svgDimensions={svgDimensions}
                         legend={legend} />
-                    {data.map(datum => (
+                    {this.chart_data.map(datum => (
                         <StackedBarHorizontal
                             key={datum.titleBar}
                             scales={{xScale, yScale}}

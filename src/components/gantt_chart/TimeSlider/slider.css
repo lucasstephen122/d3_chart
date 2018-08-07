@@ -1,3 +1,7 @@
 .slider_circle{
     cursor:pointer
 }
+.slider .Axis .domain{
+    stroke-width:2;
+    stroke:#aaa;
+}

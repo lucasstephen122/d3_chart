@@ -2,6 +2,11 @@ export default [
     {
         titleBar: 'Seri Alam',
         values: [
+            // {
+            //     title: 'status-1',
+            //     dateStart: '2017-02-14 18:16:05',
+            //     dateEnd: '2017-02-18 06:16:05',
+            // },
             {
                 title: 'status-1',
                 dateStart: '2017-04-14 18:16:05',
