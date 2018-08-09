@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import * as d3 from 'd3-shape'
 import animateWithEase from '../animateWithEase';
-import data from '../../../chart-data3'
 import { easeLinear } from 'd3-ease'
 class Area extends Component {
 
     render() {
-        const { scales, data1, margins ,display} = this.props
+        const { scales, data, margins ,display} = this.props
         const { xScale, yScale } = scales
        
         const fill_color = 'rgba(88, 71, 141, 0.1)' ;
@@ -16,7 +15,7 @@ class Area extends Component {
             .y0(function (d) { return yScale(d.value2); })
             .y1(function (d) { return yScale(d.value1); })
 
-        const newarea = area(data1)
+        const newarea = area(data)
         var style
         if(!display){
             style = {
@@ -44,5 +43,4 @@ export default animateWithEase(Area, {
     duration: 2000,
     delay: 1500,
     interval: 10,
-    data: data,
 });

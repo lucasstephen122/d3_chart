@@ -190,12 +190,12 @@ class Chart extends Component {
                     />
                     <Lines
                         scales={{ xScale, yScale }}
-                        data={new_data}
+                        chart_data={new_data}
                         display = {this.state.chart_display_3}
                     />
                     <Areas
                         scales={{ xScale, yScale }}
-                        data={new_data}
+                        chart_data={new_data}
                         display = {this.state.chart_display_4}
                     />
                     <rect 
@@ -262,7 +262,7 @@ class Chart extends Component {
                         svgDimensions={svgDimensions}
                         margins={margins}
                         scales={{ xScale, yScale1 }}
-                        data={new_data}
+                        chart_data={new_data}
                         type = {1}
                         onMouseOver={this.triggerOver.bind(this)}
                         onMouseOut={this.triggerOut.bind(this)}
@@ -272,7 +272,7 @@ class Chart extends Component {
                         svgDimensions={svgDimensions}
                         margins={margins}
                         scales={{ xScale, yScale1 }}
-                        data={new_data}
+                        chart_data={new_data}
                         type = {2}
                         onMouseOver={this.triggerOver.bind(this)}
                         onMouseOut={this.triggerOut.bind(this)}

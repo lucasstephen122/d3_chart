@@ -3,7 +3,6 @@ import   "./Bar.css"
 import { timeParse } from 'd3-time-format'
 import { easeCubicInOut } from 'd3-ease';
 import animateWithEase from '../animateWithEase';
-import data from '../../../chart-data3'
 class Bars extends Component {
     triggerOut(e) {
         this.props.onMouseOut(e)
@@ -14,24 +13,24 @@ class Bars extends Component {
         this.props.onMouseOver(e,type)
     }
     render() {
-        const { svgDimensions, margins, scales, data1 , type ,display} = this.props
+        const { svgDimensions, margins, scales, data , type ,display} = this.props
         const { xScale, yScale1 } = scales
 
         const { height , width } = svgDimensions
 
-        let bar_width = (width-data1.length*3) / data1.length
+        let bar_width = (width-data.length*3) / data.length
         //console.log(height - margins.bottom)
         
         let bars = []
         if(type == 1){
-            for(let key=0;key<data1.length;key++){
-                if(key == data1.length-1)continue
+            for(let key=0;key<data.length;key++){
+                if(key == data.length-1)continue
                 bars.push(
                         <rect
-                        key={data1[key].parsed_date}
-                        x={xScale(data1[key].parsed_date)}
-                        y={yScale1(data1[key].value4)}
-                        height={(height - margins.bottom - scales.yScale1(data1[key].value4)) - (height - margins.bottom - scales.yScale1(0))}
+                        key={data[key].parsed_date}
+                        x={xScale(data[key].parsed_date)}
+                        y={yScale1(data[key].value4)}
+                        height={(height - margins.bottom - scales.yScale1(data[key].value4)) - (height - margins.bottom - scales.yScale1(0))}
                         width={bar_width}
                         fill="#04656c"
                         onMouseEnter={this.triggerOver.bind(this)}
@@ -42,14 +41,14 @@ class Bars extends Component {
             }
             
         }else{
-            for(let key=0;key<data1.length;key++){
-                if(key == data1.length-1)continue
+            for(let key=0;key<data.length;key++){
+                if(key == data.length-1)continue
                 bars.push(
                         <rect
-                        key={data1[key].parsed_date}
-                        x={xScale(data1[key].parsed_date)}
+                        key={data[key].parsed_date}
+                        x={xScale(data[key].parsed_date)}
                         y={yScale1(0)}
-                        height={(height - margins.bottom - scales.yScale1(0)) - (height - margins.bottom - scales.yScale1(data1[key].value5))}
+                        height={(height - margins.bottom - scales.yScale1(0)) - (height - margins.bottom - scales.yScale1(data[key].value5))}
                         width={bar_width}
                         fill="#1c2c73"
                         onMouseEnter={this.triggerOver.bind(this)}
@@ -91,5 +90,4 @@ export default animateWithEase(Bars, {
     duration: 3000,
     delay: 1000,
     interval: 10,
-    data: data,
 });

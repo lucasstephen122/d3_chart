@@ -18,15 +18,15 @@ export default function animateWithEase(WrappedComponent, animationConfig) {
     'makeAnimated'
   );
 
-  const { data, easeData, interval, duration, delay } = animationConfig;
-
+  const { easeData, interval, duration, delay } = animationConfig;
   if (!animationConfig.dataPropName) {
     animationConfig.dataPropName = 'data';
   }
 
   return class Animated extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
+      const data = this.props.chart_data;
       this.state = {
         // This starting data will all be zeroed for the start of the animation
         intermediateData: easeData(data, 0),
@@ -35,7 +35,7 @@ export default function animateWithEase(WrappedComponent, animationConfig) {
         // The timestamp of the last frame -- used to only update per interval
         animationLastFrameTime: null,
       };
-      
+      this.animationStep = this.animationStep.bind(this);
     }
 
     animationStep = timestamp => {
@@ -59,7 +59,7 @@ export default function animateWithEase(WrappedComponent, animationConfig) {
         const shouldEase = timestamp - animationLastFrameTime >= interval;
         if (shouldEase) {
           this.setState({
-            intermediateData: easeData(data, t),
+            intermediateData: easeData(this.props.chart_data, t),
             animationLastFrameTime: timestamp,
           });
         }
@@ -67,7 +67,7 @@ export default function animateWithEase(WrappedComponent, animationConfig) {
       } else {
         this.setState({
           // Ensure that the correct data is used for the final frame.
-          intermediateData: data,
+          intermediateData: this.props.chart_data,
         });
       }
     };
@@ -83,7 +83,7 @@ export default function animateWithEase(WrappedComponent, animationConfig) {
 
     render() {
       const props = {
-        data1: this.state.intermediateData,
+        data: this.state.intermediateData,
         ...this.props,
       };
       //console.log(this.state.intermediateData)
