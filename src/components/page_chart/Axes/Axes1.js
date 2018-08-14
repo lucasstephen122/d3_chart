@@ -2,14 +2,14 @@ import React from 'react'
 import Axis from '../Axis/Axis'
 
 
-export default ({ scales, margins, svgDimensions }) => {
+export default ({tick_values, scales, margins, svgDimensions }) => {
     const { height,width } = svgDimensions
 
     const yProps = {
         orient: 'Left',
         scale: scales.yScale1,
         translate: `translate(${margins.left}, 0)`,
-        tickValues: [-6,-4,-2,0,2],
+        // tickValues: tick_values,
         tickSize: width - margins.left - margins.right,
     }
     const xProps = {

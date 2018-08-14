@@ -121,10 +121,33 @@ class Chart extends Component {
             height: 700
         }
         var x1 
-        const maxValue = Math.max(...data.map(d => d.value3))
-        const minValue = Math.min(...data.map(d => d.value3))
 
-        
+        const max_value_1 = Math.max(...data.map(d=> d.value1))
+        const max_value_2 = Math.max(...data.map(d=> d.value2))
+        const max_value_3 = Math.max(...data.map(d=> d.value3))
+        const max_value_4 = Math.max(...data.map(d=> d.value4))
+        const max_value_5 = Math.max(...data.map(d=> d.value5))
+
+        const min_value_1 = Math.min(...data.map(d=> d.value1))
+        const min_value_2 = Math.min(...data.map(d=> d.value2))
+        const min_value_3 = Math.min(...data.map(d=> d.value3))
+        const min_value_4 = Math.min(...data.map(d=> d.value4))
+        const min_value_5 = Math.min(...data.map(d=> d.value5))
+
+        const y_max_1 = Math.max(max_value_1,max_value_2,max_value_3)
+        const y_min_1 = Math.min(min_value_1,min_value_2,min_value_3)
+
+        const y_max_1_1 = y_max_1 + 1
+        const y_min_1_1 = y_min_1 - 1
+        var tick_values = []
+        var tick_interval = (y_max_1_1-y_min_1_1) / 5
+        for(var i=y_min_1_1+tick_interval ; i<y_max_1_1 ;i += tick_interval){
+            tick_values.push(i);
+        }
+
+        const y_max_2 = Math.ceil(Math.max(max_value_4 , max_value_5)+1)
+        const y_min_2 = Math.floor(Math.min(min_value_4 , min_value_5)-1)
+
         var parseDate = timeParse("%Y-%m-%d");
         var new_data = []
         data.forEach(function(item){
@@ -140,11 +163,11 @@ class Chart extends Component {
         //this.x_scale = xScale
         
         const yScale = this.yScale
-            .domain([0, 800])
+            .domain([y_min_1_1, y_max_1_1])
             .range([svgSubDimentions1.height - margins.bottom, margins.top])
         
         const yScale1 = this.yScale1
-            .domain([-6, 2])
+            .domain([y_min_2, y_max_2])
             .range([svgSubDimentions2.height-margins.bottom, svgSubDimentions1.height-margins.bottom])
         //tooltip circle
         return (
@@ -162,6 +185,7 @@ class Chart extends Component {
                         scales={{ xScale, yScale }}
                         margins={margins}
                         svgDimensions={svgSubDimentions1}
+                        tick_values = {tick_values}
                     />
                     <Axes1
                         scales={{ xScale, yScale1 }}
@@ -175,14 +199,14 @@ class Chart extends Component {
                         stroke="#ccc" stroke-width="1" x1="0" y1="70" x2={svgDimensions.width} y2="70">
                     </line>
                     <DotLine 
-                        y_value={580} 
+                        y_value={y_min_1} 
                         text="Safety Ceiling" 
                         svgDimensions={svgSubDimentions1} 
                         scales = {{ xScale, yScale }} 
                         margins = {margins}
                     />
                     <DotLine 
-                        y_value={150} 
+                        y_value={y_max_1} 
                         text="Safety Floor" 
                         svgDimensions={svgSubDimentions1} 
                         scales = {{ xScale, yScale }} 
@@ -203,8 +227,8 @@ class Chart extends Component {
                         className = "tooltip_rect"
                         key={Math.random()}
                         x={margins.left-50}
-                        y={yScale(maxValue+100)}
-                        height={maxValue - minValue+80}
+                        y={yScale(y_max_1+tick_interval)}
+                        height={yScale(y_min_1-tick_interval) - yScale(y_max_1+tick_interval)}
                         fill="#000" 
                         fillOpacity="0"
                         pointerEvents = "all"
@@ -220,8 +244,8 @@ class Chart extends Component {
                         className = "tooltip_rect"
                         key={Math.random()}
                         x={margins.left}
-                        y={yScale(maxValue+30)}
-                        height={maxValue - minValue}
+                        y={yScale(y_max_1)}
+                        height={yScale(y_min_1) - yScale(y_max_1)}
                         fill="#000" 
                         fillOpacity="0"
                         pointerEvents = "all"
@@ -281,7 +305,7 @@ class Chart extends Component {
                     <AxisLabel 
                         svgDimensions={svgDimensions}
                         yLabel = {"Tank  Inventory  (`000 M3)"}
-                        x_value = {130}
+                        x_value = {110}
                         y_value = {100} 
                     />
                     <AxisLabel 

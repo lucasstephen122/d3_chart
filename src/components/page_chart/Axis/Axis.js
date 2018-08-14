@@ -22,7 +22,7 @@ export default class Axis extends Component {
                 .tickSize(-this.props.tickSize)
                 .tickPadding([20])
                 .tickValues(this.props.tickValues)
-                .ticks(6)
+                .ticks(5)
         if (this.props.orient == 'Bottom'){
             axis.tickFormat(timeFormat("%b ` %d"))
         }
